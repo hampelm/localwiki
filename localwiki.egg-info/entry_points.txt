@@ -1,0 +1,3 @@
+[console_scripts]
+localwiki-manage = sapling.manage:main
+

@@ -24,6 +24,7 @@ from utils.views import (Custom404Mixin, CreateObjectMixin,
 from models import Page, PageFile, url_to_name
 from forms import PageForm, PageFileForm
 from maps.widgets import InfoMap
+from tags.models import Tag
 
 from models import slugify, clean_name
 from exceptions import PageExistsError
@@ -54,6 +55,9 @@ class PageDetailView(Custom404Mixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PageDetailView, self).get_context_data(**kwargs)
         context['date'] = self.object.versions.most_recent().version_info.date
+        
+        context['tags'] = Tag.objects.filter(page=self.object)
+        
         if hasattr(self.object, 'mapdata'):
             # Remove the PanZoomBar on normal page views.
             olwidget_options = copy.deepcopy(getattr(settings,

@@ -1,0 +1,24 @@
+Metadata-Version: 1.0
+Name: localwiki
+Version: 0.2.beta.15
+Summary: LocalWiki is a tool for collaboration in local communities
+Home-page: UNKNOWN
+Author: Mike Ivanov
+Author-email: mivanov@gmail.com
+License: UNKNOWN
+Description:  LocalWiki is a web application that includes collaborative editing and
+         mapping and is designed for collecting and sharing information in local,
+         geographic communities. Depends on python, apache2, postgis, and jetty.
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Other Audience
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet
+Classifier: Topic :: Communications :: Conferencing
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Office/Business :: Groupware

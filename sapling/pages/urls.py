@@ -7,6 +7,7 @@ import models
 from utils.constants import DATETIME_REGEXP
 from models import Page
 from views import PageFilebrowserView
+from tags.views import TagUpdateView
 
 page_list_info = {
     'model': Page,
@@ -100,6 +101,19 @@ urlpatterns = patterns('',
     url(r'^_create$', PageCreateView.as_view(), name='create'),
 
     url(r'^(?P<slug>.+)/_rename$', PageRenameView.as_view(), name='rename'),
+
+
+    ##########################################################
+    # Tags
+    ##########################################################
+    url(r'^(?P<slug>.+)/_tags/_update$', slugify(TagUpdateView.as_view()),
+        name='add_tag'),
+    url(r'^(?P<slug>.+)/_tags/_update/(?P<term_slug>.+)', slugify(TagUpdateView.as_view()),
+        name='update_tag'),
+    url(r'^(?P<slug>.+)/_tags/_delete/(?P<term_slug>.+)', slugify(TagUpdateView.as_view()),
+        name='delete_tag'),
+    
+    
 
     # TODO: Break this out, use tastypie or something similar
     ##########################################################

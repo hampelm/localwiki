@@ -217,6 +217,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'pages',
     'maps',
+    'tags',
     'users',
     'recentchanges',
     'search',

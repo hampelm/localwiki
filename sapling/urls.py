@@ -7,12 +7,14 @@ from django.views.generic.simple import redirect_to
 import pages
 import maps
 import redirects
+import tags
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^map/', include(maps.site.urls)),
     (r'^_redirect/', include(redirects.site.urls)),
+    (r'^_tag/', include(tags.site.urls)), 
     (r'^(?i)Users/', include('sapling.users.urls')),
     (r'^search/', include('sapling.search.urls')),
     (r'^', include('sapling.recentchanges.urls')),
