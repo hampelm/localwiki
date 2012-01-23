@@ -2,7 +2,8 @@ from django.conf.urls.defaults import *
 
 from utils.constants import DATETIME_REGEXP
 
-from views import TagUpdateView, TagCompareView, TagDeleteView, TagListView
+from views import (TagUpdateView, TagCompareView, 
+    TagDeleteView, TagListView)
 
 urlpatterns = patterns('',
     

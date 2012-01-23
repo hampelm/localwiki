@@ -21,7 +21,6 @@
     </ul>
     {% if exists %}
       <input type="submit" value="Update tag"/> 
-      <a class="button" href="{% url tags:delete slug=page.slug %}">Delete tag</a>
     {% else %}
       <input type="submit" value="Create tag"/> 
     {% endif %}

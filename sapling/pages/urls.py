@@ -107,7 +107,7 @@ urlpatterns = patterns('',
     # Tags
     ##########################################################
     url(r'^(?P<slug>.+)/_tags/_update$', slugify(TagUpdateView.as_view()),
-        name='add_tag'),
+        name='update_tags'),
     url(r'^(?P<slug>.+)/_tags/_update/(?P<term_slug>.+)', slugify(TagUpdateView.as_view()),
         name='update_tag'),
     url(r'^(?P<slug>.+)/_tags/_delete/(?P<term_slug>.+)', slugify(TagUpdateView.as_view()),

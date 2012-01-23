@@ -8,7 +8,7 @@ from utils.static import static_url
 from models import Tag
 
 
-class TagForm(CommentMixin, forms.ModelForm):
+class TagsForm(CommentMixin, forms.ModelForm): 
     term = forms.CharField()
 
     class Meta:

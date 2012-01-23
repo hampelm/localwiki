@@ -47,7 +47,7 @@
       <strong>Tags:</strong> 
       {% for tag in tags %}
         <a href="{% url tags:tag term_slug=tag.slug %}">{{tag}}</a>
-        <a href="{% url pages:update_tag slug=page.pretty_slug term_slug=tag.slug %}">Edit</a>
+        (<a href="{% url pages:update_tag slug=page.slug, term_slug=tag.slug %}">edit</a>)
       {% endfor %}
     </div>
     {% endif %}

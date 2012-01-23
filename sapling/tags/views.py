@@ -7,37 +7,38 @@ from django.views.generic import ListView
 from pages.models import Page, slugify
 
 from models import Tag
-from forms import TagForm
+from forms import TagsForm
 
 class TagListView(ListView):
     context_object_name = "page_list"
     template_name = "pages/page_list.html"
 
     def get_queryset(self):
-        return Tag.objects.filter(slug__exact=self.kwargs['term_slug'])
+        tags = Tag.objects.filter(slug__exact=self.kwargs['term_slug'])
+        return [tag.page for tag in tags]
 
     def get_context_data(self, **kwargs):
-        
-        context = super(TagListView, self).get_context_data(**kwargs)
-       
+        context = super(TagListView, self).get_context_data(**kwargs)       
         context['term_slug'] = self.kwargs['term_slug']
-        print "hey!"
+        tags = Tag.objects.filter(slug__exact=self.kwargs['term_slug'])
+        if tags:
+            context['list_scope'] = tags[0].term
         return context
 
-
-class TagUpdateView(CreateObjectMixin,
-        UpdateView):
+class TagUpdateView(CreateObjectMixin, UpdateView):
     model = Tag
-    form_class = TagForm
+    form_class = TagsForm
 
     def get_object(self):
         term_slug = self.kwargs.get('term_slug')
         page_slug = slugify(self.kwargs.get('slug'))
         page = Page.objects.get(slug=page_slug)
-        tag = Tag.objects.filter(slug=term_slug, page=page)
-        if tag:
-            return tag[0]
-        return Tag(page=page, term=term_slug)
+        tags = Tag.objects.filter(page=page, slug=term_slug)
+        if tags:
+            return tags[0]
+            # terms = [tag.term for tag in tags]
+            # return ','.join(terms)
+        return Tag(page=page)
 
     def get_context_data(self, **kwargs):
         context = super(TagUpdateView, self).get_context_data(**kwargs)
