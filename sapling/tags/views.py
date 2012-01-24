@@ -1,9 +1,13 @@
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_protect
+from django.views.generic import ListView
 
 from versionutils.versioning.views import UpdateView, DeleteView
 from versionutils import diff
 from utils.views import CreateObjectMixin, PermissionRequiredMixin
-from django.views.generic import ListView
 from pages.models import Page, slugify
 
 from models import Tag
@@ -25,6 +29,32 @@ class TagListView(ListView):
             context['list_scope'] = tags[0].term
         return context
 
+
+@csrf_protect
+def edit_tags(request, slug):
+    page = Page.objects.get(slug=slugify(slug))
+    context = RequestContext(request, {})
+    
+    if request.method == 'POST':
+        form = TagsForm(request.POST)
+        if form.is_valid():
+            terms = form.cleaned_data['terms'].split(',')
+            Tag.objects.filter(page=page).delete() # Really naive 
+            for term in terms:
+                Tag.objects.get_or_create(term=term, slug=slugify(term),
+                    page=page)
+            return HttpResponseRedirect(reverse('pages:show', args=(page.slug,)))
+            
+    else: 
+        tags = Tag.objects.filter(page=page)
+        terms = ','.join([tag.term for tag in tags])    
+        form = TagsForm(initial={'terms': terms})
+        context['form'] = form
+        context['page'] = page
+    
+    return render_to_response('tags/tag_form.html', context)
+    
+    
 class TagUpdateView(CreateObjectMixin, UpdateView):
     model = Tag
     form_class = TagsForm

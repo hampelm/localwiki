@@ -8,15 +8,5 @@ from utils.static import static_url
 from models import Tag
 
 
-class TagsForm(CommentMixin, forms.ModelForm): 
-    term = forms.CharField()
-
-    class Meta:
-        model = Tag
-        exclude = ('slug', 'page')
-
-    class Media:
-        js = (
-              static_url('js/jquery/jquery-1.7.min.js'),
-              static_url('js/jquery/jquery-ui-1.8.16.custom.min.js'),
-        )
+class TagsForm(CommentMixin, forms.Form): 
+    terms = forms.CharField()

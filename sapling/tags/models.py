@@ -9,9 +9,11 @@ import exceptions
 
 
 class Tag(models.Model):
-    term = models.TextField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255, unique=True)
+    term = models.TextField(max_length=255)
+    slug = models.SlugField(max_length=255)
     page = models.ForeignKey(Page)
+    
+    unique_together = ("term", "slug", "page")
 
     def __unicode__(self):
         return "%s" % (self.term)
