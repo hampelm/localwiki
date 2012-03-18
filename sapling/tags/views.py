@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext 
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView
 
@@ -53,6 +53,21 @@ def edit_tags(request, slug):
         context['page'] = page
     
     return render_to_response('tags/tag_form.html', context)
+    
+    
+def suggest(request):
+    """
+    Simple tag suggest.
+    """
+    # XXX TODO: Break this out when doing the API work.
+    import json
+
+    term = request.GET.get('term', None)
+    if not term:
+        return HttpResponse('')
+    results = Tag.objects.filter(term__istartswith=term)
+    results = [t.term for t in results]
+    return HttpResponse(json.dumps(results))
     
     
 class TagUpdateView(CreateObjectMixin, UpdateView):
